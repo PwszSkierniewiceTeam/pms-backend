@@ -38,6 +38,19 @@ $c['phpErrorHandler'] = function ($c) {
 // Create an app
 $app = new \Slim\App($c);
 
+// Setup CORS
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
+
+$app->add(function ($req, $res, $next) {
+    $response = $next($req, $res);
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+});
+
 // Example route
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
@@ -45,6 +58,7 @@ $app->get('/hello/{name}', function (Request $request, Response $response, array
 
     return $response;
 });
+
 
 // Run application
 $app->run();
