@@ -112,6 +112,9 @@ paths:
       - Projects
       summary: Create new project
       operationId: createProject
+      description: |
+        Every user can create own project. User will automatically gain admin
+        role on the project.
       requestBody:
         content:
           application/json:
@@ -137,6 +140,8 @@ paths:
       - Projects
       summary: Update the project
       operationId: updateProject
+      description: |
+        The project can be udpated only by user with ADMIN role in project.
       parameters:
       - in: path
         name: projectId
@@ -172,6 +177,8 @@ paths:
       - Projects
       summary: Delete the project
       operationId: removeProject
+      description: |
+        The project can be deleted only by user with ADMIN role in project.
       parameters:
       - in: path
         name: projectId
@@ -195,6 +202,8 @@ paths:
       - Tasks
       summary: Get list of the tasks assigned to the project
       operationId: getTasks
+      description: |
+        Only the user assigned to the project can fetch it's tasks.
       parameters:
       - in: query
         name: projectId
@@ -250,6 +259,8 @@ paths:
       - Tasks
       summary: Update task
       operationId: updateTask
+      description: |
+        Every user with permission to view the project can edit a task.
       parameters:
       - in: path
         name: taskId
@@ -274,6 +285,8 @@ paths:
       - Tasks
       summary: Delete the task
       operationId: removeTask
+      description: |
+        Only project admin can delete the task.
       parameters:
       - in: path
         name: taskId
