@@ -203,7 +203,7 @@ paths:
       summary: Get users assigned to the project
       operationId: getUsers
       parameters:
-      - in: query
+      - in: path
         name: projectId
         required: true
         schema:
