@@ -1,0 +1,546 @@
+openapi: 3.0.0
+info:
+  version: '0.0.1'
+  title: Project Management System Api
+  description: |
+    This is the API spec for the Project Management System App [Draft Version].
+
+    ## Response codes
+    The Response Codes documented for each API call are the response codes
+    originating in the server code for the routine. Other response codes
+    may occur originating outside the API routines itself, eg. 5xx codes.
+    The client must be prepared to handle that.
+
+    ## Security
+    Most API calls requires authentication. If the required Authorization HTTP header
+    is missing or invalid, these calls will fail with code 401. Furthermore,
+    the token obtained during Login is only valid for a limited period; if it is
+    used beyond its expiry date, the API calls will fail with code 401. The client
+    must be prepared for that and get a new token by calling proper endpoint.
+
+    If the token supplied to an API call requiring authentication is valid, but the
+    user the token belongs to does not have sufficient privileges to execute the
+    operation, the API call will fail with code 403 (Forbidden). This also happens
+    if the user the token belongs to does not exist at the *client_id* specified
+    in an API call.
+
+paths:
+  /users/login:
+    post:
+      tags:
+      - Users
+      summary: Login user into the system
+      operationId: login
+      description: |
+        Creates a new authorization token.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jwt:
+                    type: string
+        400:
+          description: |
+            Invalid parameters to the request or an error occurred during execution
+            of the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormValidationErrors'
+
+  /users/register:
+    post:
+      tags:
+      - Users
+      summary: Registers the user
+      operationId: register
+      description: |
+        Creates new user entry in the system.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        204:
+          description: success no-content
+        400:
+          description: |
+            Invalid parameters to the request or an error occurred during execution
+            of the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormValidationErrors'
+
+  /projects:
+    get:
+      tags:
+      - Projects
+      summary: Get list of the projects viewable for the current user
+      operationId: getProjects
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        401:
+          description: Unauthorized
+
+    post:
+      tags:
+      - Projects
+      summary: Create new project
+      operationId: createProject
+      description: |
+        Every user can create own project. User will automatically gain admin
+        role on the project.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        204:
+          description: success no-content
+        400:
+          description: |
+            Invalid parameters to the request or an error occurred during execution
+            of the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormValidationErrors'
+        401:
+          description: Unauthorized
+
+  /projects/{projectId}:
+    put:
+      tags:
+      - Projects
+      summary: Update the project
+      operationId: updateProject
+      description: |
+        The project can be udpated only by user with ADMIN role in project.
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        204:
+          description: success no-content
+        400:
+          description: |
+            Invalid parameters to the request or an error occurred during execution
+            of the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormValidationErrors'
+        401:
+          description: Unauthorized
+        403:
+          description: Insufficient privileges
+        404:
+          description: Doesn't exist
+
+    delete:
+      tags:
+      - Projects
+      summary: Delete the project
+      operationId: removeProject
+      description: |
+        The project can be deleted only by user with ADMIN role in project.
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        204:
+          description: success no-contenet
+        401:
+          description: Unauthorized
+        403:
+          description: Insufficient privileges
+        404:
+          description: Doesn't exist
+
+  /project/{projectId}/users:
+    get:
+      tags:
+      - Projects
+      summary: Get users assigned to the project
+      operationId: getUsers
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    name:
+                      type: string
+                    surname:
+                      type: string
+                    email:
+                      type: string
+                      format: email
+                  required:
+                  - id
+                  - name
+                  - surname
+                  - email
+        400:
+          description: |
+            Invalid parameters to the request or an error occurred during execution
+            of the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormValidationErrors'
+        401:
+          description: Unauthorized
+        403:
+          description: Insufficient privileges
+        404:
+          description: Doesn't exist
+
+    post:
+      tags:
+      - Projects
+      summary: Assign user to the project
+      operationId: addUserToProject
+      description: |
+        User can be assigned to the project by e-mail address.
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+              - email
+      responses:
+        204:
+          description: success no-contenet
+        401:
+          description: Unauthorized
+        403:
+          description: Insufficient privileges
+        404:
+          description: Doesn't exist
+
+  /project/{projectId}/users/{userId}:
+    delete:
+      tags:
+      - Projects
+      summary: Remove user from the project
+      operationId: removeUserFromProject
+      parameters:
+      - in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        204:
+          description: success no-contenet
+        401:
+          description: Unauthorized
+        403:
+          description: Insufficient privileges
+        404:
+          description: Doesn't exist
+
+  /tasks:
+    get:
+      tags:
+      - Tasks
+      summary: Get list of the tasks assigned to the project
+      operationId: getTasks
+      description: |
+        Only the user assigned to the project can fetch it's tasks.
+      parameters:
+      - in: query
+        name: projectId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        401:
+          description: Unauthorized
+    post:
+      tags:
+      - Tasks
+      summary: Create new task in the project
+      operationId: createTask
+      parameters:
+      - in: query
+        name: projectId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        204:
+          description: success no-content
+        400:
+          description: |
+            Invalid parameters to the request or an error occurred during execution
+            of the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormValidationErrors'
+        401:
+          description: Unauthorized
+
+  /tasks/{taskId}:
+    put:
+      tags:
+      - Tasks
+      summary: Update task
+      operationId: updateTask
+      description: |
+        Every user with permission to view the project can edit a task.
+      parameters:
+      - in: path
+        name: taskId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        401:
+          description: Unauthorized
+
+    delete:
+      tags:
+      - Tasks
+      summary: Delete the task
+      operationId: removeTask
+      description: |
+        Only project admin can delete the task.
+      parameters:
+      - in: path
+        name: taskId
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        204:
+          description: success no-contenet
+        401:
+          description: Unauthorized
+        403:
+          description: Insufficient privileges
+        404:
+          description: Doesn't exist
+
+components:
+  schemas:
+    FormValidationErrors:
+      type: array
+      items:
+        type: object
+        properties:
+          field:
+            type: string
+          message:
+            type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        surname:
+          type: string
+        password:
+          type: string
+          format: password
+        email:
+          type: string
+          format: email
+      required:
+      - id
+      - name
+      - surname
+      - password
+      - email
+      example:
+        {
+          "id":"df91b001-653b-4acc-aca2-05f81052f594",
+          "name": "Jan",
+          "surname": "Kowalski",
+          "password": "maslo123",
+          "email": "jan.kowlaski@example.com"
+        }
+
+    ProjectUserRole:
+      description: |
+        It is contextual project field based on the user role in the project.
+      type: string
+      enum:
+      - ADMIN
+      - USER
+
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        startDate:
+          type: string
+          format: 'date-time'
+        endDate:
+          type: string
+          format: 'date-time'
+        userRole:
+          $ref: '#/components/schemas/ProjectUserRole'
+      required:
+      - id
+      - name
+      - description
+      - startDate
+      - endDate
+
+    TaskType:
+      type: string
+      enum:
+      - Task
+      - Bug
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        assignedUser:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            surname:
+              type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          $ref: '#/components/schemas/TaskType'
+      required:
+      - id
+      - projectId
+      - name
+      - type
+
+  # Security schemas
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+
+# Apply the security globally to all operations
+security:
+- bearerAuth: []         # use the same name as above
