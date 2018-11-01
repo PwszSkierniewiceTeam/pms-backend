@@ -63,6 +63,7 @@ final class AuthorizationController extends BaseController
         $payload = [
             "iat" => $now->getTimeStamp(),
             "exp" => $future->getTimeStamp(),
+            "validFor" => $future->getTimeStamp() - $now->getTimeStamp(),
             "user" => $user
         ];
 
