@@ -6,6 +6,7 @@ return [
 
         // JWT
         'jwt' => [
+            'secure' => false,
             'secret' => 'super_secret_should_not_commit',
             'expires' => '+20 minutes',
             'algorithm' => ['HS256']

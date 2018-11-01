@@ -6,6 +6,7 @@
 $jwt = $app->getContainer()['settings']['jwt'];
 
 $app->add(new Tuupola\Middleware\JwtAuthentication([
+    'secure' => $jwt['secure'],
     'secret' => $jwt['secret'],
     'path' => ['/'],
     'ignore' => ['/users/login', '/users/register'],
