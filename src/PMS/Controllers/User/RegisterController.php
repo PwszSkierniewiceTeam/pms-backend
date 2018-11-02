@@ -3,6 +3,7 @@
 namespace PMS\Controllers\User;
 
 use PMS\Controllers\BaseController;
+use PMS\Models\Project;
 use PMS\Models\User;
 use Respect\Validation\Validator;
 use Slim\Http\Request;
