@@ -503,6 +503,13 @@ components:
       - Task
       - Bug
 
+    TaskStatus:
+      type: string
+      enum:
+      - TODO
+      - IN_PROGRESS
+      - DONE
+
     Task:
       type: object
       properties:
@@ -528,6 +535,8 @@ components:
           type: string
         type:
           $ref: '#/components/schemas/TaskType'
+        status:
+          $ref: '#/components/schemas/TaskStatus'
       required:
       - id
       - projectId
