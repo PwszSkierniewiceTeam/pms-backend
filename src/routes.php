@@ -3,7 +3,7 @@
 use PMS\Controllers\Project\RemoveProjectController;
 use PMS\Controllers\Project\GetAllProjectsController;
 use PMS\Controllers\Project\PostNewProjectController;
-use PMS\Controllers\Project\ProjectController;
+use PMS\Controllers\Project\UpdateProjectController;
 use PMS\Controllers\User\AuthorizationController;
 use PMS\Controllers\User\RegisterController;
 use Slim\Http\Request;
@@ -57,7 +57,7 @@ $app->delete('/projects/{projectId}', function (Request $request, Response $resp
  * Summary: Update the project
  */
 $app->put('/projects/{projectId}', function (Request $request, Response $response, array $args) {
-    $controller = new RemoveProjectController($this->db);
+    $controller = new UpdateProjectController($this->db);
     return $controller->handleRequest($request, $response, $args);
 });
 

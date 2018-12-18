@@ -8,15 +8,29 @@ use Slim\Http\Response;
 use PMS\TokenDecode\RequestingUserData;
 use PMS\Models\Project;
 use PMS\Enums\ProjectUserRole;
+use Respect\Validation\Validator;
 
 
-class RemoveProjectController extends BaseController
+
+class UpdateProjectController extends BaseController
 {
     public function handleRequest(Request $request, Response $response, array $args): Response
     {
+        $updatedProject = new Project($request->getParsedBody());
         $projectId = $args['projectId'];
         $userId = RequestingUserData::getUserId($request);
 
+        $this->validator->validate($updatedProject, [
+            'name' => Validator::notBlank()->length(1, 30),
+            // 'description' => Validator::notBlank()->length(1, 100),
+            'startDate' => Validator::notBlank()->date(),
+            'endDate' => Validator::notBlank()->date()
+            ]);
+
+        if (!$this->validator->isValid()) {
+            return $response->withJson($this->validator->getErrors(), 400);
+        }
+        
         $project = $this->findProjectById($projectId);
 
         if ($project == null){
@@ -28,19 +42,22 @@ class RemoveProjectController extends BaseController
         if ($userRole == ProjectUserRole::USER || $userRole == null){
             return $response->withJson(["uncategorized" => "Insufficient privileges"],403);
         }
-
-        $sql = "DELETE FROM UsersProjects WHERE UsersProjects.projectId=:projectId;
-                DELETE FROM Projects WHERE Projects.id=:projectId;";
+        
+        $sql = "UPDATE Projects
+                SET name=:name, startDate=:startDate, endDate=:endDate
+                WHERE id=:projectId";
         try {
             $stmt = $this->db->prepare($sql);
+            $stmt->bindParam("name", $updatedProject->name);
+            $stmt->bindParam("startDate", $updatedProject->startDate);
+            $stmt->bindParam("endDate", $updatedProject->endDate);
             $stmt->bindParam("projectId", $projectId);
             $stmt->execute();
             return $response->withStatus(204);
-            }catch(\PDOException $e) {
-                    return $response->withJson(['uncategorize' => $e->getMessage()], 400);
-            }
-        
-    }    
+        }catch(\PDOException $e) {
+            return $response->withJson(['uncategorize' => $e->getMessage()], 400);
+        }
+    }
 
     private function findProjectById(string $projectId) : ?Project
     {
@@ -64,4 +81,5 @@ class RemoveProjectController extends BaseController
         
         return $data? intval($data['userRole']) : null;
     }
+
 }
