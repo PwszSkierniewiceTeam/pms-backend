@@ -20,7 +20,7 @@ use Slim\Http\Response;
 class PostNewProjectController extends BaseController
 {
 
-    public function handleRequest(Request $request, Response $response): Response
+    public function handleRequest(Request $request, Response $response, $args = null): Response
     {
         $project = new Project($request->getParsedBody());
         $userId = RequestingUserData::getUserId($request);

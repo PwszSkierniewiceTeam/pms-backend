@@ -18,7 +18,7 @@ use Slim\Http\Response;
 class GetAllProjectsController extends BaseController
 {
 
-    public function handleRequest(Request $request, Response $response): Response
+    public function handleRequest(Request $request, Response $response, $args = null): Response
     {
         $userId = (string)RequestingUserData::getUserId($request);
         $projects = $this->findAllProjects($userId);

@@ -13,11 +13,7 @@ use PMS\Enums\ProjectUserRole;
 
 class RemoveProjectController extends BaseController
 {
-    public function handleRequest(Request $request, Response $response): Response
-    {
-    }
-
-    public function handleRequestWithArg(Request $request, Response $response, array $args): Response
+    public function handleRequest(Request $request, Response $response, array $args): Response
     {
         $projectId = $args['projectId'];
         $userId = RequestingUserData::getUserId($request);
@@ -58,7 +54,7 @@ class RemoveProjectController extends BaseController
         return $data? new Project($data) : null;
     }
 
-    private function findUserRole(string $projectId, string $userId)
+    private function findUserRole(string $projectId, string $userId) : ?int
     {
         $sql = "SELECT UsersProjects.role as userRole FROM UsersProjects WHERE projectId=:projectId AND userId=:userId";
         $stmt = $this->db->prepare($sql);

@@ -49,17 +49,16 @@ $app->get('/projects', function (Request $request, Response $response) {
  */
 $app->delete('/projects/{projectId}', function (Request $request, Response $response, array $args) {
     $controller = new RemoveProjectController($this->db);
-    return $controller->handleRequestWithArg($request, $response, $args);
+    return $controller->handleRequest($request, $response, $args);
 });
 
 /**
  * PUT updateProject
  * Summary: Update the project
  */
-$app->put('/projects/{projectId}', function (Request $request, Response $response) {
-    $body = $request->getParsedBody();
-
-    return $response->withJson(['data' => 'Please implement this method']);
+$app->put('/projects/{projectId}', function (Request $request, Response $response, array $args) {
+    $controller = new RemoveProjectController($this->db);
+    return $controller->handleRequest($request, $response, $args);
 });
 
 /**

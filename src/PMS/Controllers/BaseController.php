@@ -18,5 +18,5 @@ abstract class BaseController
         $this->validator = new Validator();
     }
 
-    abstract public function handleRequest(Request $request, Response $response): Response;
+    abstract public function handleRequest(Request $request, Response $response, array $args): Response;
 }
