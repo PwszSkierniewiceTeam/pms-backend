@@ -4,6 +4,7 @@ use PMS\Controllers\Project\RemoveProjectController;
 use PMS\Controllers\Project\GetAllProjectsController;
 use PMS\Controllers\Project\PostNewProjectController;
 use PMS\Controllers\Project\UpdateProjectController;
+use PMS\Controllers\Project\GetProjectUsersController;
 use PMS\Controllers\User\AuthorizationController;
 use PMS\Controllers\User\RegisterController;
 use Slim\Http\Request;
@@ -58,6 +59,15 @@ $app->delete('/projects/{projectId}', function (Request $request, Response $resp
  */
 $app->put('/projects/{projectId}', function (Request $request, Response $response, array $args) {
     $controller = new UpdateProjectController($this->db);
+    return $controller->handleRequest($request, $response, $args);
+});
+
+/**
+ * GET getProjectUsers
+ * Summary: Get list of users assigned to the project
+ */
+$app->get('/projects/{projectId}/users', function (Request $request, Response $response, array $args) {
+    $controller = new GetProjectUsersController($this->db);
     return $controller->handleRequest($request, $response, $args);
 });
 
