@@ -21,9 +21,10 @@ use PMS\Models\User;
 class ListTasksController extends BaseController
 {
 
-    public function handleRequest(Request $request, Response $response, array $args): Response
+    public function handleRequest(Request $request, Response $response): Response
     {
-        $projectId = $args['projectId'];
+        $queryParams = $request->getQueryParams();
+        $projectId = $queryParams['projectId'];
         $userId = RequestingUserData::getUserId($request);
 
 

@@ -19,10 +19,11 @@ use Slim\Http\Response;
 
 class CreateTaskController extends BaseController
 {
-    public function handleRequest(Request $request, Response $response, array $args): Response
+    public function handleRequest(Request $request, Response $response): Response
     {
         $task = new Task($request->getParsedBody());
-        $projectId = $args['projectId'];
+        $queryParams = $request->getQueryParams();
+        $projectId = $queryParams['projectId'];
         $userId = RequestingUserData::getUserId($request);
 
 
