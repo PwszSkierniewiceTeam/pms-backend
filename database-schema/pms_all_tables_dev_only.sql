@@ -1,4 +1,4 @@
-CREATE TABLE pms.users
+CREATE TABLE pms.Users
 (
     id varchar(36) DEFAULT uuid() PRIMARY KEY NOT NULL,
     name varchar(255) NOT NULL,
@@ -46,7 +46,6 @@ CREATE INDEX IX_projectId ON pms.Tasks(projectId);
 CREATE TABLE pms.UsersTasks (
     taskId varchar(36) NOT NULL,
     userId varchar(36) NOT NULL,
-    role varchar(20) NOT NULL,
     CONSTRAINT PK_UsersTasks PRIMARY KEY (userId, taskId)
 );
 CREATE INDEX IX_userId ON pms.UsersTasks(userId);

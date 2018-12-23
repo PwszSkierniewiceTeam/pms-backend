@@ -11,8 +11,8 @@ namespace PMS\Enums;
 
 abstract class TaskStatus
 {
-    const TODO = 1;
-    const IN_PROGRESS = 2;
-    const DONE = 3;
+    const TODO = "TODO";
+    const IN_PROGRESS = "IN_PROGRESS";
+    const DONE = "DONE";
 
 }

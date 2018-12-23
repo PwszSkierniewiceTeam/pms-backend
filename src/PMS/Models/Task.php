@@ -9,6 +9,10 @@
 namespace PMS\Models;
 
 
+use PMS\Enums\TaskStatus;
+use PMS\Enums\TaskType;
+
+
 class Task extends BaseModel
 {
     /* @var UUID $id */
@@ -17,6 +21,8 @@ class Task extends BaseModel
     public $name;
     /* @var string $projectId */
     public $projectId;
-    /* @var string $type */
+    /* @var TaskType $type */
     public $type;
+    /* @var TaskStatus $status */
+    public $status;
 }

@@ -1,7 +1,9 @@
 <?php
 
 use PMS\Controllers\Tasks\CreateTaskController;
+use PMS\Controllers\Tasks\DeleteTaskController;
 use PMS\Controllers\Tasks\ListTasksController;
+use PMS\Controllers\Tasks\UpdateTaskController;
 use PMS\Controllers\User\AuthorizationController;
 use PMS\Controllers\User\RegisterController;
 use Slim\Http\Request;
@@ -86,16 +88,18 @@ $app->get('/tasks', function (Request $request, Response $response) {
  * DELETE removeTask
  * Summary: Delete the task
  */
-$app->delete('/tasks/{taskId}', function (Request $request, Response $response) {
-    return $response->withJson(['data' => 'Please implement this method']);
+$app->delete('/tasks/{taskId}', function (Request $request, Response $response, $args) {
+    $controller = new DeleteTaskController($this->db);
+    return $controller->handleRequest($request, $response, $args);
 });
 
 /**
  * PUT updateTask
  * Summary: Update task
  */
-$app->put('/tasks/{taskId}', function (Request $request, Response $response) {
-    return $response->withJson(['data' => 'Please implement this method']);
+$app->put('/tasks/{taskId}', function (Request $request, Response $response, $args) {
+    $controller = new UpdateTaskController($this->db);
+    return $controller->handleRequest($request, $response, $args);
 });
 
 $app->delete('/projects/{projectId}/users/{userId}', function (Request $request, Response $response) {

@@ -6,11 +6,11 @@
  * Time: 22:58
  */
 
-namespace PMS\Models\ModelsEnums;
+namespace PMS\Enums;
 
 
 abstract class TaskType
 {
-    const TASK = 1;
-    const Bug = 2;
+    const TASK = "TASK";
+    const BUG = "BUG";
 }
