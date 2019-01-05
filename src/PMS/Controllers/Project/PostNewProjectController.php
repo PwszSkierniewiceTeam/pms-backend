@@ -43,8 +43,8 @@ class PostNewProjectController extends BaseController
                 $stmt = $this->db->prepare($sql);
                 $stmt->bindParam('name', $project->name);
                 $stmt->bindParam('description', $project->description);
-                $stmt->bindParam('startDate', $project->startDate);
-                $stmt->bindParam('endDate', $project->endDate);
+                $stmt->bindParam('startDate', date("Y-m-d", strtotime($project->startDate)));
+                $stmt->bindParam('endDate', date("Y-m-d", strtotime($project->endDate)));
                 $stmt->bindParam('userId', $userId);
                 $stmt->bindParam('userRole', $userRole = ProjectUserRole::ADMIN);
                 $stmt->execute();
