@@ -44,4 +44,4 @@ CREATE TABLE pms.Tasks (
 );
 CREATE UNIQUE INDEX UIX_taskId ON pms.Tasks(id);
 CREATE INDEX IX_projectId ON pms.Tasks(projectId);
-CREATE INDEX IX_userId ON pms.Tasks(userId);
+CREATE INDEX IX_assignedUserId ON pms.Tasks(assignedUserId);
