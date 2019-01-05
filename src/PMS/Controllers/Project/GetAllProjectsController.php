@@ -26,7 +26,7 @@ class GetAllProjectsController extends BaseController
         if (!empty($projects)){
             return $response->withJson($projects, 200);
         }else{
-            return $response->withJson(['No projects available'], 200);
+            return $response->withJson([], 200);
         }
     }
 
