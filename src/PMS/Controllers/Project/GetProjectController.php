@@ -5,6 +5,7 @@ namespace PMS\Controllers\Project;
 use PMS\Controllers\BaseController;
 use PMS\TokenDecode\RequestingUserData;
 use PMS\Queries\CommonQueries;
+use PMS\Enums\ProjectUserRole;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -25,6 +26,9 @@ class GetProjectController extends BaseController
             return $response->withJson(["uncategorized" => "Project doesn't exist"], 404);
         }
 
+        $userRole = CommonQueries::findUserRole($this->db, $projectId, $userId);
+
+        $project->userRole = $userRole;
 
         return $response->withJson($project, 200);
     }

@@ -31,6 +31,12 @@ class RemoveUserFromProjectCOntroller extends BaseController
             return $response->withJson(["uncategorized" => "Insufficient privileges"],403);
         }
 
+        $userToBeRmovedRole = CommonQueries::findUserRole($this->db, $projectId, $userToBeRmovedId);
+
+        if ($userToBeRmovedRole == ProjectUserRole::ADMIN){
+            return $response->withJson(["uncategorized" => "Can't remove Admin"], 404);
+        }
+
         if (!$this->checkIfUserExists($userToBeRmovedId)){
             return $response->withJson(["uncategorized" => "User doesn't exist"], 404);
         }
