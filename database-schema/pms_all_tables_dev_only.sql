@@ -1,4 +1,4 @@
-CREATE TABLE pms.users
+CREATE TABLE pms.Users
 (
     id varchar(36) DEFAULT uuid() PRIMARY KEY NOT NULL,
     name varchar(255) NOT NULL,
@@ -6,8 +6,8 @@ CREATE TABLE pms.users
     email varchar(255) NOT NULL,
     password text NOT NULL
 );
-CREATE UNIQUE INDEX UIX_userId ON pms.users (id);
-CREATE UNIQUE INDEX UIX_userEmail ON pms.users (email);
+CREATE UNIQUE INDEX UIX_userId ON pms.Users (id);
+CREATE UNIQUE INDEX UIX_userEmail ON pms.Users (email);
 
 CREATE TABLE pms.Projects (
     id varchar(36) DEFAULT uuid() NOT NULL,

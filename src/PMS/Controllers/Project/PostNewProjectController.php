@@ -49,7 +49,7 @@ class PostNewProjectController extends BaseController
                 $stmt->bindParam('userRole', $userRole = ProjectUserRole::ADMIN);
                 $stmt->execute();
             } catch (\PDOException $e) {
-                return $response->withJson(['uncategorize' => $e->getMessage()], 400);
+                return $response->withJson(['uncategorized' => $e->getMessage()], 400);
             }
             return $response->withStatus(204);
         }
