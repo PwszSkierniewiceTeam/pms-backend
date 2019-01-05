@@ -18,7 +18,7 @@ use Slim\Http\Response;
 class GetAllProjectsController extends BaseController
 {
 
-    public function handleRequest(Request $request, Response $response, $args = null): Response
+    public function handleRequest(Request $request, Response $response, array $args = null): Response
     {
         $userId = (string)RequestingUserData::getUserId($request);
         $projects = $this->findAllProjects($userId);
@@ -39,7 +39,7 @@ class GetAllProjectsController extends BaseController
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('userId', $userId);
         $stmt->execute();
-        
+
         while ($row = $stmt->fetchObject()){
             $projects[] = new Project($row);
         }

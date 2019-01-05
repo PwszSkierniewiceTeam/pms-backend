@@ -23,7 +23,7 @@ final class RegisterController extends BaseController
 
         if ($this->validator->isValid()) {
             // Insert user to database
-            $sql = "INSERT INTO users (name, surname, email, password) 
+            $sql = "INSERT INTO Users (name, surname, email, password) 
                     VALUES            (:name, :surname, :email, :password)";
             try {
                 $stmt = $this->db->prepare($sql);

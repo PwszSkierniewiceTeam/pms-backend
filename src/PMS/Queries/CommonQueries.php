@@ -14,7 +14,7 @@ class CommonQueries
 
     public static function findUserById($db, string $userId): ?User
     {
-        $sql = "SELECT * FROM users WHERE id=:id";
+        $sql = "SELECT * FROM Users WHERE id=:id";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("id", $userId);
         $stmt->execute();
@@ -26,7 +26,7 @@ class CommonQueries
 
     public static function findProjectById( $db ,string $projectId) : ?Project
     {
-        $sql = "SELECT * FROM projects WHERE id=:projectId";
+        $sql = "SELECT * FROM Projects WHERE id=:projectId";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("projectId", $projectId);
         $stmt->execute();
@@ -36,7 +36,7 @@ class CommonQueries
     }
     public static function findTaskById( $db ,string $taskId) : ?Task
     {
-        $sql = "SELECT * FROM tasks WHERE id=:taskId";
+        $sql = "SELECT * FROM Tasks WHERE id=:taskId";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("taskId", $taskId);
         $stmt->execute();
@@ -47,7 +47,7 @@ class CommonQueries
 
     public static function findProjectIdByTaskId( $db ,string $taskId)
     {
-        $sql = "SELECT projectId FROM tasks WHERE id=:taskId";
+        $sql = "SELECT projectId FROM Tasks WHERE id=:taskId";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("taskId", $taskId);
         $stmt->execute();
@@ -58,7 +58,7 @@ class CommonQueries
 
     public static function findUserRole($db, string $projectId, string $userId)// : ?int
     {
-        $sql = "SELECT role FROM usersprojects WHERE projectId=:projectId AND userId=:userId";
+        $sql = "SELECT role FROM UsersProjects WHERE projectId=:projectId AND userId=:userId";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("projectId", $projectId);
         $stmt->bindParam("userId", $userId);
@@ -70,7 +70,7 @@ class CommonQueries
 
     public static  function UserInTask($db, string $userId, string $taskId): ?bool
     {
-        $sql = "SELECT * FROM userstasks WHERE taskId=:taskId AND userId=:userId";
+        $sql = "SELECT * FROM UsersTasks WHERE taskId=:taskId AND userId=:userId";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("taskId", $taskId);
         $stmt->bindParam("userId", $userId);

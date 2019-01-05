@@ -20,7 +20,7 @@ use Slim\Http\Response;
 class PostNewProjectController extends BaseController
 {
 
-    public function handleRequest(Request $request, Response $response, $args = null): Response
+    public function handleRequest(Request $request, Response $response, array $args = null): Response
     {
         $project = new Project($request->getParsedBody());
         $userId = RequestingUserData::getUserId($request);
@@ -31,7 +31,7 @@ class PostNewProjectController extends BaseController
             'startDate' => Validator::notBlank()->date(),
             'endDate' => Validator::notBlank()->date()
             ]);
-           
+
         // $userRole = ProjectUserRole::ADMIN;
         if ($this->validator->isValid()) {
             $sql = "SET @uuid = uuid();

@@ -46,9 +46,9 @@ final class CreateTaskController extends BaseController
 
         if ($this->validator->isValid()) {
             $sql = "SET @uuid = uuid();
-                    INSERT INTO tasks (id, name, projectId, description, type, status)
+                    INSERT INTO Tasks (id, name, projectId, description, type, status)
                     VALUES        (@uuid, :name, :projectId, :description, :type, :status);
-                    INSERT INTO userstasks ( taskId, userId)
+                    INSERT INTO UsersTasks ( taskId, userId)
                     VALUES  (@uuid, :userId);";
 
             try {

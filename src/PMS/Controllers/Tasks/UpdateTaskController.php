@@ -57,8 +57,7 @@ final class UpdateTaskController extends BaseController
 
 
         if ($this->validator->isValid()) {
-            $sql = "UPDATE tasks SET name=:nname, description=:ndescription, type=:ntype, status=:nstatus
-                      WHERE id=:currentId";
+            $sql = "UPDATE Tasks SET name=:nname, description=:ndescription, type=:ntype WHERE id=:currentId";
 
             try {
                 $stmt = $this->db->prepare($sql);
@@ -74,7 +73,7 @@ final class UpdateTaskController extends BaseController
 
             if(!(CommonQueries::UserInTask($this->db, $assignedUser->id, $newTask['id'])))
             {
-                $sql = "INSERT INTO userstasks (taskid, userid)
+                $sql = "INSERT INTO UsersTasks (taskid, userid)
                     VALUES (:currentId, :assignedUserId)";
                 try {
                     $stmt = $this->db->prepare($sql);

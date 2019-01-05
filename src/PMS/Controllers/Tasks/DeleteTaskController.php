@@ -47,8 +47,8 @@ final class DeleteTaskController extends BaseController
             return $response->withJson($data, 403);
         }
 
-        $sql = "DELETE FROM userstasks WHERE taskId=:taskId;
-                DELETE FROM tasks WHERE id=:taskId;";
+        $sql = "DELETE FROM UsersTasks WHERE taskId=:taskId;
+                DELETE FROM Tasks WHERE id=:taskId;";
 
         $stmt=$this->db->prepare($sql);
         $stmt->bindParam("taskId", $taskId);

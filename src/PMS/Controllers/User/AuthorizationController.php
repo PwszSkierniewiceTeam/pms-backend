@@ -41,7 +41,7 @@ final class AuthorizationController extends BaseController
 
     private function findUserByEmailAndPassword(string $email, string $password): ?User
     {
-        $sql = "SELECT * FROM users WHERE email=:email AND password=:password";
+        $sql = "SELECT * FROM Users WHERE email=:email AND password=:password";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam("email", $email);
         $stmt->bindParam("password", $password);
