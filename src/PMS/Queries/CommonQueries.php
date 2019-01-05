@@ -34,6 +34,19 @@ class CommonQueries
 
         return $data? new Project($data) : null;
     }
+
+    public function checkIfUserAssignedToProject($db, string $userId, string $projectId) : bool
+    {
+        $sql = "SELECT * FROM UsersProjects WHERE userId=:userId AND projectId=:projectId";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("userId", $userId);
+        $stmt->bindParam("projectId", $projectId);        
+        $stmt->execute();
+        $data = $stmt->fetchObject();
+
+        return $data? true : false;
+    }
+
     public static function findTaskById( $db ,string $taskId) : ?Task
     {
         $sql = "SELECT * FROM Tasks WHERE id=:taskId";

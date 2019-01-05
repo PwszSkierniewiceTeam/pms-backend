@@ -35,7 +35,7 @@ class RemoveUserFromProjectCOntroller extends BaseController
             return $response->withJson(["uncategorized" => "User doesn't exist"], 404);
         }
         
-        if (!$this->checkIfUserAssignedToProject($userToBeRmovedId, $projectId)){
+        if (!CommonQueries::checkIfUserAssignedToProject($this->db, $userToBeRmovedId, $projectId)){
             return $response->withJson(["uncategorized" => "User is not assigned to this project"], 404);
         }
 
@@ -51,18 +51,6 @@ class RemoveUserFromProjectCOntroller extends BaseController
             return $response->withJson(['uncategorize' => $e->getMessage()], 400);
         }
 
-    }
-
-    private function checkIfUserAssignedToProject(string $userId, string $projectId) : bool
-    {
-        $sql = "SELECT * FROM UsersProjects WHERE userId=:userId AND projectId=:projectId";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam("userId", $userId);
-        $stmt->bindParam("projectId", $projectId);        
-        $stmt->execute();
-        $data = $stmt->fetchObject();
-
-        return $data? true : false;
     }
 
     private function checkIfUserExists(string $userId) : bool

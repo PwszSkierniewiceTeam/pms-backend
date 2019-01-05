@@ -6,6 +6,7 @@ use PMS\Controllers\Tasks\ListTasksController;
 use PMS\Controllers\Tasks\UpdateTaskController;
 use PMS\Controllers\Project\RemoveProjectController;
 use PMS\Controllers\Project\GetAllProjectsController;
+use PMS\Controllers\Project\GetProjectController;
 use PMS\Controllers\Project\PostNewProjectController;
 use PMS\Controllers\Project\UpdateProjectController;
 use PMS\Controllers\Project\GetProjectUsersController;
@@ -39,6 +40,15 @@ $app->post('/users/register', function (Request $request, Response $response) {
 $app->post('/projects', function (Request $request, Response $response) {
     $controller = new PostNewProjectController($this->db);
     return $controller->handleRequest($request, $response);
+});
+
+/**
+ * GET getProject
+ * Summary: get project by id
+ */
+$app->get('/projects/{projectId}', function (Request $request, Response $response, array $args) {
+    $controller = new GetProjectController($this->db);
+    return $controller->handleRequest($request, $response, $args);
 });
 
 /**
