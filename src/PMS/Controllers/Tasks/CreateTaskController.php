@@ -2,14 +2,13 @@
 
 namespace PMS\Controllers\Tasks;
 
-use PMS\Enums\TaskStatus;
 use PMS\Controllers\BaseController;
+use PMS\Enums\TaskStatus;
 use PMS\Queries\CommonQueries;
 use PMS\TokenDecode\RequestingUserData;
 use Respect\Validation\Validator;
 use Slim\Http\Request;
 use Slim\Http\Response;
-
 
 
 final class CreateTaskController extends BaseController
@@ -23,20 +22,20 @@ final class CreateTaskController extends BaseController
         $assigned = $task['assignedUser'];
 
 
-        if (!(CommonQueries::findUserRole($this->db, $userId, $projectId))) {
-            $data = ['Unauthorized' => 'You are not assigned to this project'];
-            return $response->withJson($data, 401);
-        }
+        /*        if (!(CommonQueries::findUserRole($this->db, $userId, $projectId))) {
+                    $data = ['Unauthorized' => 'You are not assigned to this project'];
+                    return $response->withJson($data, 401);
+                }*/
 
-        if (!(CommonQueries::findUserById($this->db, $assigned['id']))) {
+/*        if (!(CommonQueries::findUserById($this->db, $assigned['id']))) {
             $data = ["User doesn't exist"];
             return $response->withJson($data, 401);
-        }
+        }*/
 
-        if (!(CommonQueries::findUserRole($this->db, $assigned['id'], $projectId))) {
-            $data = ['Unauthorized' => 'The given user is not assigned to this project'];
-            return $response->withJson($data, 401);
-        }
+        /*        if (!(CommonQueries::findUserRole($this->db, $assigned['id'], $projectId))) {
+                    $data = ['Unauthorized' => 'The given user is not assigned to this project'];
+                    return $response->withJson($data, 401);
+                }*/
 
         $this->validator->validate($task, [
             'name' => Validator::notBlank()->length(1, 30),
@@ -45,11 +44,11 @@ final class CreateTaskController extends BaseController
 
 
         if ($this->validator->isValid()) {
-            $sql = "SET @uuid = uuid();
-                    INSERT INTO Tasks (id, name, projectId, description, type, status)
-                    VALUES        (@uuid, :name, :projectId, :description, :type, :status);
-                    INSERT INTO UsersTasks ( taskId, userId)
-                    VALUES  (@uuid, :userId);";
+            $sql = "SET @uuid = uuid();";
+            $sql .= "INSERT INTO Tasks (id, name, projectId, description, type, status)
+                             VALUES        (@uuid, :name, :projectId, :description, :type, :status);";
+            $sql .= "INSERT INTO UsersTasks (taskId, userId) 
+                             VALUES                 (@uuid, :userId);";
 
             try {
                 $stmt = $this->db->prepare($sql);

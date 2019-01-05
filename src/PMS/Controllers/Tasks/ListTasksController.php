@@ -26,7 +26,7 @@ final class ListTasksController extends BaseController
         $userId = RequestingUserData::getUserId($request);
 
 
-        $user = CommonQueries::findUserById($this->db,$userId);
+/*        $user = CommonQueries::findUserById($this->db,$userId);
         if (!$user) {
             $data = [ "User doesn't exist" ];
             return $response->withJson($data, 401);
@@ -36,27 +36,25 @@ final class ListTasksController extends BaseController
         if (!$project) {
             $data = ["Project doesn't exist" ];
             return $response->withJson($data, 401);
-        }
+        }*/
 
 
-        if(!(CommonQueries::findUserRole($this->db, $userId, $projectId))) {
+        /*if(!(CommonQueries::findUserRole($this->db, $userId, $projectId))) {
             $data = [
                 "unauthorized" => "User is not assigned to the project.",
             ];
             return $response->withJson($data,401);
-        }
+        }*/
 
 
-        return $response->withJson([
-            'tasks' => $this->getTasks($projectId)
-        ]);
+        return $response->withJson($this->getTasks($projectId));
 
     }
 
     private function getTasks($projectId)
     {
         $all = array();
-        $sql = "SELECT * FROM tasks WHERE projectId=:projectId";
+        $sql = "SELECT * FROM Tasks WHERE projectId=:projectId";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(":projectId", $projectId);
         $stmt->execute();
@@ -73,10 +71,10 @@ final class ListTasksController extends BaseController
     private function getUsers($taskId)
     {
         $users = array();
-        $sql = "SELECT users.id, users.name, users.surname FROM users
-                INNER JOIN userstasks
-                ON users.id = userstasks.userId
-                WHERE userstasks.taskId=:taskId";
+        $sql = "SELECT Users.id, Users.name, Users.surname FROM Users
+                INNER JOIN UsersTasks
+                ON Users.id = UsersTasks.userId
+                WHERE UsersTasks.taskId=:taskId";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(":taskId", $taskId);
         $stmt->execute();
