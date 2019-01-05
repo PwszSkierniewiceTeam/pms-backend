@@ -1,5 +1,9 @@
 <?php
 
+use PMS\Controllers\Tasks\CreateTaskController;
+use PMS\Controllers\Tasks\DeleteTaskController;
+use PMS\Controllers\Tasks\ListTasksController;
+use PMS\Controllers\Tasks\UpdateTaskController;
 use PMS\Controllers\Project\RemoveProjectController;
 use PMS\Controllers\Project\GetAllProjectsController;
 use PMS\Controllers\Project\PostNewProjectController;
@@ -96,11 +100,8 @@ $app->delete('/projects/{projectId}/users/{userId}', function (Request $request,
  * Summary: Create new task in the project
  */
 $app->post('/tasks', function (Request $request, Response $response) {
-    $queryParams = $request->getQueryParams();
-    $projectId = $queryParams['projectId'];
-    $body = $request->getParsedBody();
-
-    return $response->withJson(['data' => 'Please implement this method']);
+    $controller = new CreateTaskController($this->db);
+    return $controller->handleRequest($request, $response);
 });
 
 /**
@@ -108,24 +109,24 @@ $app->post('/tasks', function (Request $request, Response $response) {
  * Summary: Get list of the tasks assigned to the project
  */
 $app->get('/tasks', function (Request $request, Response $response) {
-    $queryParams = $request->getQueryParams();
-    $projectId = $queryParams['projectId'];
-
-    return $response->withJson(['data' => 'Please implement this method']);
+    $controller = new ListTasksController($this->db);
+    return $controller->handleRequest($request, $response);
 });
 
 /**
  * DELETE removeTask
  * Summary: Delete the task
  */
-$app->delete('/tasks/{taskId}', function (Request $request, Response $response) {
-    return $response->withJson(['data' => 'Please implement this method']);
+$app->delete('/tasks/{taskId}', function (Request $request, Response $response, $args) {
+    $controller = new DeleteTaskController($this->db);
+    return $controller->handleRequest($request, $response, $args);
 });
 
 /**
  * PUT updateTask
  * Summary: Update task
  */
-$app->put('/tasks/{taskId}', function (Request $request, Response $response) {
-    return $response->withJson(['data' => 'Please implement this method']);
+$app->put('/tasks/{taskId}', function (Request $request, Response $response, $args) {
+    $controller = new UpdateTaskController($this->db);
+    return $controller->handleRequest($request, $response, $args);
 });

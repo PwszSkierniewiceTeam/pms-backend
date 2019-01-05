@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Grimneon
- * Date: 11.11.2018
- * Time: 22:03
- */
 
 namespace PMS\TokenDecode;
-
 
 use Firebase\JWT\JWT;
 use Slim\Http\Request;
