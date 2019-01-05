@@ -4,6 +4,13 @@ use PMS\Controllers\Tasks\CreateTaskController;
 use PMS\Controllers\Tasks\DeleteTaskController;
 use PMS\Controllers\Tasks\ListTasksController;
 use PMS\Controllers\Tasks\UpdateTaskController;
+use PMS\Controllers\Project\RemoveProjectController;
+use PMS\Controllers\Project\GetAllProjectsController;
+use PMS\Controllers\Project\PostNewProjectController;
+use PMS\Controllers\Project\UpdateProjectController;
+use PMS\Controllers\Project\GetProjectUsersController;
+use PMS\Controllers\Project\AssignUserToProjectController;
+use PMS\Controllers\Project\RemoveUserFromProjectController;
 use PMS\Controllers\User\AuthorizationController;
 use PMS\Controllers\User\RegisterController;
 use Slim\Http\Request;
@@ -30,8 +37,8 @@ $app->post('/users/register', function (Request $request, Response $response) {
  * Summary: Create new project
  */
 $app->post('/projects', function (Request $request, Response $response) {
-    $body = $request->getParsedBody();
-    return $response->withJson(['data' => 'Please implement this method']);
+    $controller = new PostNewProjectController($this->db);
+    return $controller->handleRequest($request, $response);
 });
 
 /**
@@ -39,25 +46,53 @@ $app->post('/projects', function (Request $request, Response $response) {
  * Summary: Get list of the projects viewable for the current user
  */
 $app->get('/projects', function (Request $request, Response $response) {
-    return $response->withJson(['data' => 'Please implement this method']);
+    $controller = new GetAllProjectsController($this->db);
+    return $controller->handleRequest($request, $response);
 });
 
 /**
  * DELETE removeProject
  * Summary: Delete the project
  */
-$app->delete('/projects/{projectId}', function (Request $request, Response $response) {
-    return $response->withJson(['data' => 'Please implement this method']);
+$app->delete('/projects/{projectId}', function (Request $request, Response $response, array $args) {
+    $controller = new RemoveProjectController($this->db);
+    return $controller->handleRequest($request, $response, $args);
 });
 
 /**
  * PUT updateProject
  * Summary: Update the project
  */
-$app->put('/projects/{projectId}', function (Request $request, Response $response) {
-    $body = $request->getParsedBody();
+$app->put('/projects/{projectId}', function (Request $request, Response $response, array $args) {
+    $controller = new UpdateProjectController($this->db);
+    return $controller->handleRequest($request, $response, $args);
+});
 
-    return $response->withJson(['data' => 'Please implement this method']);
+/**
+ * GET getProjectUsers
+ * Summary: Get list of users assigned to the project
+ */
+$app->get('/projects/{projectId}/users', function (Request $request, Response $response, array $args) {
+    $controller = new GetProjectUsersController($this->db);
+    return $controller->handleRequest($request, $response, $args);
+});
+
+/**
+ * POST assignUserToProject
+ * Summary: Assign user to the project
+ */
+$app->post('/projects/{projectId}/users', function (Request $request, Response $response, array $args) {
+    $controller = new AssignUserToProjectController($this->db);
+    return $controller->handleRequest($request, $response, $args);
+});
+
+/**
+ * DELETE removeUserFromProject
+ * Summary: Delete user from the project
+ */
+$app->delete('/projects/{projectId}/users/{userId}', function (Request $request, Response $response, array $args) {
+    $controller = new RemoveUserFromProjectController($this->db);
+    return $controller->handleRequest($request, $response, $args);
 });
 
 /**
@@ -65,9 +100,6 @@ $app->put('/projects/{projectId}', function (Request $request, Response $respons
  * Summary: Create new task in the project
  */
 $app->post('/tasks', function (Request $request, Response $response) {
-//    $queryParams = $request->getQueryParams();
-//    $projectId = $queryParams['projectId'];
-//    $body = $request->getParsedBody();
     $controller = new CreateTaskController($this->db);
     return $controller->handleRequest($request, $response);
 });
@@ -77,9 +109,6 @@ $app->post('/tasks', function (Request $request, Response $response) {
  * Summary: Get list of the tasks assigned to the project
  */
 $app->get('/tasks', function (Request $request, Response $response) {
-//    $queryParams = $request->getQueryParams();
-//    $projectId = $queryParams['projectId'];
-
     $controller = new ListTasksController($this->db);
     return $controller->handleRequest($request, $response);
 });
@@ -100,12 +129,4 @@ $app->delete('/tasks/{taskId}', function (Request $request, Response $response, 
 $app->put('/tasks/{taskId}', function (Request $request, Response $response, $args) {
     $controller = new UpdateTaskController($this->db);
     return $controller->handleRequest($request, $response, $args);
-});
-
-$app->delete('/projects/{projectId}/users/{userId}', function (Request $request, Response $response) {
-    return $response->withJson(['data' => 'Please implement this method']);
-});
-
-$app->post('/projects/{projectId}/users', function (Request $request, Response $response) {
-    return $response->withJson(['data' => 'Please implement this method']);
 });

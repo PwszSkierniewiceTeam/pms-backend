@@ -16,7 +16,6 @@ final class AuthorizationController extends BaseController
     {
         $data = $request->getParsedBody();
 
-
         if (!isset($data['email']) || !isset($data['password'])) {
             return $response->withJson([
                 'error' => 'Invalid parameters'

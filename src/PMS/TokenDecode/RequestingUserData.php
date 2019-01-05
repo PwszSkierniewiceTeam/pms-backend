@@ -1,15 +1,12 @@
 <?php
 
-
 namespace PMS\TokenDecode;
-
 
 use Firebase\JWT\JWT;
 use Slim\Http\Request;
 
 class RequestingUserData
 {
-
     static public function getUserId(Request $request)
     {
         global $app;
