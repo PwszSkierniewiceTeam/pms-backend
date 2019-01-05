@@ -129,11 +129,3 @@ $app->delete('/tasks/{taskId}', function (Request $request, Response $response) 
 $app->put('/tasks/{taskId}', function (Request $request, Response $response) {
     return $response->withJson(['data' => 'Please implement this method']);
 });
-
-$app->delete('/projects/{projectId}/users/{userId}', function (Request $request, Response $response) {
-    return $response->withJson(['data' => 'Please implement this method']);
-});
-
-$app->post('/projects/{projectId}/users', function (Request $request, Response $response) {
-    return $response->withJson(['data' => 'Please implement this method']);
-});
