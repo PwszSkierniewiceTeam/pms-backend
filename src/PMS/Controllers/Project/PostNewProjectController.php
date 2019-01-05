@@ -34,10 +34,10 @@ class PostNewProjectController extends BaseController
 
         // $userRole = ProjectUserRole::ADMIN;
         if ($this->validator->isValid()) {
-            $sql = "SET @uuid = uuid();
-                    INSERT INTO projects (id ,name, description, startDate, endDate) 
-                    VALUES        (@uuid, :name, :description, :startDate, :endDate);
-                    INSERT INTO usersProjects (projectId, userId, role)
+            $sql = "SET @uuid = uuid();";
+            $sql .= "INSERT INTO Projects (id ,name, description, startDate, endDate) 
+                    VALUES        (@uuid, :name, :description, :startDate, :endDate);";
+            $sql .= "INSERT INTO UsersProjects (projectId, userId, role)
                     VALUES  (@uuid, :userId, :userRole);";
             try {
                 $stmt = $this->db->prepare($sql);
