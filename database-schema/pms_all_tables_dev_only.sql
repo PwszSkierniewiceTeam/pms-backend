@@ -12,6 +12,7 @@ CREATE UNIQUE INDEX UIX_userEmail ON pms.users (email);
 CREATE TABLE pms.Projects (
     id varchar(36) DEFAULT uuid() NOT NULL,
     name varchar(30) NOT NULL,
+    description varchar(255) NOT NULL,
     startDate date NOT NULL,
     endDate date NOT NULL,
     PRIMARY KEY (id)
@@ -35,6 +36,7 @@ CREATE TABLE pms.Tasks (
     id varchar(36) DEFAULT uuid() NOT NULL,
     name varchar(30) NOT NULL,
     projectId varchar(36) NOT NULL,
+    description varchar(255) NOT NULL,
     type varchar(30) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (projectId) REFERENCES Projects(id)
