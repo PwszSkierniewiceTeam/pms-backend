@@ -51,8 +51,8 @@ class UpdateProjectController extends BaseController
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam("name", $updatedProject->name);
             $stmt->bindParam("description", $updatedProject->description);
-            $stmt->bindParam("startDate", $updatedProject->startDate);
-            $stmt->bindParam("endDate", $updatedProject->endDate);
+            $stmt->bindParam('startDate', date("Y-m-d", strtotime($project->startDate)));
+            $stmt->bindParam('endDate', date("Y-m-d", strtotime($project->endDate)));
             $stmt->bindParam("projectId", $projectId);
             $stmt->execute();
             return $response->withStatus(204);
