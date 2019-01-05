@@ -40,7 +40,7 @@ CREATE TABLE pms.Tasks (
     status varchar(30) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (projectId) REFERENCES Projects(id)
-    FOREIGN KEY (userId) REFERENCES Users(id)
+    FOREIGN KEY (assignedUserId) REFERENCES Users(id)
 );
 CREATE UNIQUE INDEX UIX_taskId ON pms.Tasks(id);
 CREATE INDEX IX_projectId ON pms.Tasks(projectId);
