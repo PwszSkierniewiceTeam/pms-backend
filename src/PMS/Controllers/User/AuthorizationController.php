@@ -12,7 +12,7 @@ use Slim\Http\Response;
 
 final class AuthorizationController extends BaseController
 {
-    public function handleRequest(Request $request, Response $response, $args = null): Response
+    public function handleRequest(Request $request, Response $response): Response
     {
         $data = $request->getParsedBody();
 

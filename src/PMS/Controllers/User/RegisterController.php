@@ -10,7 +10,7 @@ use Slim\Http\Response;
 
 final class RegisterController extends BaseController
 {
-    public function handleRequest(Request $request, Response $response, $args = null): Response
+    public function handleRequest(Request $request, Response $response): Response
     {
         $user = new User($request->getParsedBody());
 
