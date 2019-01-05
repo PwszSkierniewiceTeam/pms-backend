@@ -33,7 +33,7 @@ class GetAllProjectsController extends BaseController
     private function findAllProjects(string $userId)
     {
         $projects = array();
-        $sql = "SELECT Projects.id, Projects.name, Projects.startDate, Projects.endDate, UsersProjects.role as userRole 
+        $sql = "SELECT Projects.id, Projects.name, Projects.description, Projects.startDate, Projects.endDate, UsersProjects.role as userRole 
                 FROM Projects 
                 INNER JOIN UsersProjects ON Projects.id = UsersProjects.projectId AND UsersProjects.userId = :userId";
         $stmt = $this->db->prepare($sql);

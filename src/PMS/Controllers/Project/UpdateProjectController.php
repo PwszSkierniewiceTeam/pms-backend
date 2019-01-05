@@ -23,7 +23,7 @@ class UpdateProjectController extends BaseController
 
         $this->validator->validate($updatedProject, [
             'name' => Validator::notBlank()->length(1, 30),
-            // 'description' => Validator::notBlank()->length(1, 100),
+            'description' => Validator::notBlank()->length(1, 100),
             'startDate' => Validator::notBlank()->date(),
             'endDate' => Validator::notBlank()->date()
             ]);
@@ -45,11 +45,12 @@ class UpdateProjectController extends BaseController
         }
         
         $sql = "UPDATE Projects
-                SET name=:name, startDate=:startDate, endDate=:endDate
+                SET name=:name, description=:description, startDate=:startDate, endDate=:endDate
                 WHERE id=:projectId";
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam("name", $updatedProject->name);
+            $stmt->bindParam("description", $updatedProject->description);
             $stmt->bindParam("startDate", $updatedProject->startDate);
             $stmt->bindParam("endDate", $updatedProject->endDate);
             $stmt->bindParam("projectId", $projectId);

@@ -27,7 +27,7 @@ class PostNewProjectController extends BaseController
 
         $this->validator->validate($project, [
             'name' => Validator::notBlank()->length(1, 30),
-            // 'description' => Validator::notBlank()->length(1, 100),
+            'description' => Validator::notBlank()->length(1, 100),
             'startDate' => Validator::notBlank()->date(),
             'endDate' => Validator::notBlank()->date()
             ]);
@@ -35,13 +35,14 @@ class PostNewProjectController extends BaseController
         // $userRole = ProjectUserRole::ADMIN;
         if ($this->validator->isValid()) {
             $sql = "SET @uuid = uuid();
-                    INSERT INTO projects (id ,name, startDate, endDate) 
-                    VALUES        (@uuid, :name, :startDate, :endDate);
+                    INSERT INTO projects (id ,name, description, startDate, endDate) 
+                    VALUES        (@uuid, :name, :description, :startDate, :endDate);
                     INSERT INTO usersProjects (projectId, userId, role)
                     VALUES  (@uuid, :userId, :userRole);";
             try {
                 $stmt = $this->db->prepare($sql);
                 $stmt->bindParam('name', $project->name);
+                $stmt->bindParam('description', $project->description);
                 $stmt->bindParam('startDate', $project->startDate);
                 $stmt->bindParam('endDate', $project->endDate);
                 $stmt->bindParam('userId', $userId);

@@ -16,8 +16,8 @@ class Project extends BaseModel
     public $id;
     /* @var string $name */
     public $name;
-    // /* @var string $description */
-    // public $description;
+    /* @var string $description */
+    public $description;
     /* @var date-time $startDate */
     public $startDate;
     /* @var date-time $endDate */
