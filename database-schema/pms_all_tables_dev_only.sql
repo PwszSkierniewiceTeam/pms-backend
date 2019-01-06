@@ -1,4 +1,4 @@
-CREATE TABLE pms.users
+CREATE TABLE pms.Users
 (
     id varchar(36) DEFAULT uuid() PRIMARY KEY NOT NULL,
     name varchar(255) NOT NULL,
@@ -12,7 +12,6 @@ CREATE UNIQUE INDEX UIX_userEmail ON pms.users (email);
 CREATE TABLE pms.Projects (
     id varchar(36) DEFAULT uuid() NOT NULL,
     name varchar(30) NOT NULL,
-    description varchar(255) NOT NULL,
     startDate date NOT NULL,
     endDate date NOT NULL,
     PRIMARY KEY (id)
@@ -36,8 +35,8 @@ CREATE TABLE pms.Tasks (
     id varchar(36) DEFAULT uuid() NOT NULL,
     name varchar(30) NOT NULL,
     projectId varchar(36) NOT NULL,
-    description varchar(255) NOT NULL,
     type varchar(30) NOT NULL,
+    status varchar(30) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (projectId) REFERENCES Projects(id)
 );
@@ -47,7 +46,6 @@ CREATE INDEX IX_projectId ON pms.Tasks(projectId);
 CREATE TABLE pms.UsersTasks (
     taskId varchar(36) NOT NULL,
     userId varchar(36) NOT NULL,
-    role varchar(20) NOT NULL,
     CONSTRAINT PK_UsersTasks PRIMARY KEY (userId, taskId)
 );
 CREATE INDEX IX_userId ON pms.UsersTasks(userId);

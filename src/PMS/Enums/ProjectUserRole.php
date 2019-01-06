@@ -6,6 +6,6 @@ namespace PMS\Enums;
 
 abstract class ProjectUserRole
 {
-    const USER = "USER";
-    const ADMIN = "ADMIN";
+    const USER = 1;
+    const ADMIN = 2;
 }
