@@ -17,25 +17,23 @@ final class CreateTaskController extends BaseController
     {
         $projectId = $request->getQueryParams()['projectId'];
         $userId = RequestingUserData::getUserId($request);
-
         $task = $request->getParsedBody();
-        $assigned = $task['assignedUser'];
 
+        $userRole = CommonQueries::findUserRole($this->db, $projectId, $userId);
 
-        /*        if (!(CommonQueries::findUserRole($this->db, $userId, $projectId))) {
-                    $data = ['Unauthorized' => 'You are not assigned to this project'];
-                    return $response->withJson($data, 401);
-                }*/
+        if ($userRole == "USER" || $userRole == null) {
+            return $response->withJson(['Unauthorized'], 401);
+        }
 
-/*        if (!(CommonQueries::findUserById($this->db, $assigned['id']))) {
+        if (!(CommonQueries::findUserById($this->db, $task['assignedUserId']))) {
             $data = ["User doesn't exist"];
             return $response->withJson($data, 401);
-        }*/
+        }
 
-        /*        if (!(CommonQueries::findUserRole($this->db, $assigned['id'], $projectId))) {
-                    $data = ['Unauthorized' => 'The given user is not assigned to this project'];
-                    return $response->withJson($data, 401);
-                }*/
+        if (!(CommonQueries::findUserRole($this->db, $projectId, $task['assignedUserId']))) {
+            $data = ['Unauthorized' => 'The given user is not assigned to this project'];
+            return $response->withJson($data, 401);
+        }
 
         $this->validator->validate($task, [
             'name' => Validator::notBlank()->length(1, 30),
@@ -45,10 +43,8 @@ final class CreateTaskController extends BaseController
 
         if ($this->validator->isValid()) {
             $sql = "SET @uuid = uuid();";
-            $sql .= "INSERT INTO Tasks (id, name, projectId, description, type, status)
-                             VALUES        (@uuid, :name, :projectId, :description, :type, :status);";
-            $sql .= "INSERT INTO UsersTasks (taskId, userId) 
-                             VALUES                 (@uuid, :userId);";
+            $sql .= "INSERT INTO Tasks (id, name, projectId, description, type, status, assignedUserId)
+                             VALUES    (@uuid, :name, :projectId, :description, :type, :status, :assignedUserId);";
 
             try {
                 $stmt = $this->db->prepare($sql);
@@ -57,10 +53,10 @@ final class CreateTaskController extends BaseController
                 $stmt->bindParam('name', $task['name']);
                 $stmt->bindParam('type', $task['type']);
                 $stmt->bindParam('status', $status = TaskStatus::TODO);
-                $stmt->bindParam('userId', $assigned['id']);
+                $stmt->bindParam('assignedUserId', $task['assignedUserId']);
                 $stmt->execute();
             } catch (\PDOException $e) {
-                return $response->withJson(['uncategorize' => $e->getMessage()], 400);
+                return $response->withJson(['uncategorized' => $e->getMessage()], 400);
             }
             return $response->withStatus(204);
         }

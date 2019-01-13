@@ -26,25 +26,16 @@ final class ListTasksController extends BaseController
         $userId = RequestingUserData::getUserId($request);
 
 
-/*        $user = CommonQueries::findUserById($this->db,$userId);
-        if (!$user) {
-            $data = [ "User doesn't exist" ];
-            return $response->withJson($data, 401);
+        $project = CommonQueries::findProjectById($this->db, $projectId);
+
+        if (!$project) {
+             return $response->withJson(["uncategorized" => "Project doesn't exist"], 401);
         }
 
-        $project = CommonQueries::findProjectById($this->db, $projectId);
-        if (!$project) {
-            $data = ["Project doesn't exist" ];
-            return $response->withJson($data, 401);
-        }*/
 
-
-        /*if(!(CommonQueries::findUserRole($this->db, $userId, $projectId))) {
-            $data = [
-                "unauthorized" => "User is not assigned to the project.",
-            ];
-            return $response->withJson($data,401);
-        }*/
+        if(!(CommonQueries::findUserRole($this->db, $projectId, $userId))) {
+            return $response->withJson(["unauthorized" => "User is not assigned to the project."],401);
+        }
 
 
         return $response->withJson($this->getTasks($projectId));
@@ -53,35 +44,16 @@ final class ListTasksController extends BaseController
 
     private function getTasks($projectId)
     {
-        $all = array();
+        $tasks = array();
         $sql = "SELECT * FROM Tasks WHERE projectId=:projectId";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(":projectId", $projectId);
         $stmt->execute();
 
         while ($row = $stmt->fetchObject()) {
-            $taskId =$row->id;
-            $tasks = new Task($row);
-            $users  = $this->getUsers($taskId);
-            $all[] = array($tasks,$users);
+            $tasks[] = new Task($row);
+
         }
-        return $all;
+        return $tasks;
      }
-
-    private function getUsers($taskId)
-    {
-        $users = array();
-        $sql = "SELECT Users.id, Users.name, Users.surname FROM Users
-                INNER JOIN UsersTasks
-                ON Users.id = UsersTasks.userId
-                WHERE UsersTasks.taskId=:taskId";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":taskId", $taskId);
-        $stmt->execute();
-
-        while ($row = $stmt->fetchObject()) {
-            $users[] = $row;
-        }
-        return $users;
-    }
 }

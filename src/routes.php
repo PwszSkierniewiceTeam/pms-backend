@@ -2,6 +2,7 @@
 
 use PMS\Controllers\Tasks\CreateTaskController;
 use PMS\Controllers\Tasks\DeleteTaskController;
+use PMS\Controllers\Tasks\GetTaskController;
 use PMS\Controllers\Tasks\ListTasksController;
 use PMS\Controllers\Tasks\UpdateTaskController;
 use PMS\Controllers\Project\RemoveProjectController;
@@ -123,11 +124,21 @@ $app->get('/tasks', function (Request $request, Response $response) {
     return $controller->handleRequest($request, $response);
 });
 
+
+/**
+ * GET getTasks
+ * Summary: Get task
+ */
+$app->get('/tasks/{taskId}', function (Request $request, Response $response, array $args) {
+    $controller = new GetTaskController($this->db);
+    return $controller->handleRequest($request, $response, $args);
+});
+
 /**
  * DELETE removeTask
  * Summary: Delete the task
  */
-$app->delete('/tasks/{taskId}', function (Request $request, Response $response, $args) {
+$app->delete('/tasks/{taskId}', function (Request $request, Response $response, array $args) {
     $controller = new DeleteTaskController($this->db);
     return $controller->handleRequest($request, $response, $args);
 });
@@ -136,7 +147,7 @@ $app->delete('/tasks/{taskId}', function (Request $request, Response $response, 
  * PUT updateTask
  * Summary: Update task
  */
-$app->put('/tasks/{taskId}', function (Request $request, Response $response, $args) {
+$app->put('/tasks/{taskId}', function (Request $request, Response $response, array $args) {
     $controller = new UpdateTaskController($this->db);
     return $controller->handleRequest($request, $response, $args);
 });
