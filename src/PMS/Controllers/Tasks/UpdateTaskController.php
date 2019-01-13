@@ -27,11 +27,6 @@ final class UpdateTaskController extends BaseController
         $userId = RequestingUserData::getUserId($request);
         $projectId = CommonQueries::findProjectIdByTaskId($this->db, $taskId);
 
-//        return $response->withJson([
-//            'tasks' =>  CommonQueries::findUserRole($this->db, $projectId, $userId)
-//
-//        ]);
-
 
         $currentTask = CommonQueries::findTaskById($this->db, $taskId);
         if (!($currentTask)) {
