@@ -51,9 +51,22 @@ final class ListTasksController extends BaseController
         $stmt->execute();
 
         while ($row = $stmt->fetchObject()) {
-            $tasks[] = new Task($row);
-
+            $task = new Task($row);
+            $task->assignedUser = $this->getUser($task->assignedUser);
+            $tasks[] = $task;
         }
+
         return $tasks;
+    }
+
+    private function getUser($userId)
+    {
+        $sql = "SELECT id, name, surname FROM Users WHERE id=:userId";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":userId", $userId);
+        $stmt->execute();
+        $data = $stmt->fetchObject();
+
+        return $data;
     }
 }

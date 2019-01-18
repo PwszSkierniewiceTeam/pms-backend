@@ -9,7 +9,9 @@
 namespace PMS\Controllers\Tasks;
 
 
+use function MongoDB\BSON\toJSON;
 use PMS\Controllers\BaseController;
+use PMS\Models\Task;
 use PMS\Queries\CommonQueries;
 use PMS\TokenDecode\RequestingUserData;
 use Slim\Http\Request;
@@ -27,7 +29,7 @@ class GetTaskController extends BaseController
         $projectId = CommonQueries::findProjectIdByTaskId($this->db, $taskId);
 
 
-        if(!(CommonQueries::findUserRole($this->db, $projectId, $userId ))) {
+        if (!(CommonQueries::findUserRole($this->db, $projectId, $userId))) {
             return $response->withJson(["uncategorized" => "User is not assigned to this project"], 404);
         }
 
@@ -36,10 +38,22 @@ class GetTaskController extends BaseController
             return $response->withJson(["uncategorized" => "Task doesn't exist"], 401);
         }
 
+        $task->assignedUser = $this->getUser($task->assignedUser);
 
         return $response->withJson([
-            'tasks' => $task
+            'task' => $task
         ]);
 
     }
+    private function getUser($userId)
+    {
+        $sql = "SELECT id, name, surname FROM Users WHERE id=:userId";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":userId", $userId);
+        $stmt->execute();
+        $data = $stmt->fetchObject();
+
+        return $data;
+    }
+
 }
