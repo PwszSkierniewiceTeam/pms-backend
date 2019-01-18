@@ -10,6 +10,7 @@ namespace PMS\Controllers\Tasks;
 
 
 use PMS\Controllers\BaseController;
+use PMS\Enums\ProjectUserRole;
 use PMS\Queries\CommonQueries;
 use PMS\TokenDecode\RequestingUserData;
 use Slim\Http\Request;
@@ -25,35 +26,28 @@ final class DeleteTaskController extends BaseController
 
 
         if(!(CommonQueries::findTaskById($this->db, $taskId))){
-            $data = ["Doesn't exist"];
-            return $response->withJson($data, 401);
+            return $response->withJson(["uncategorized" => "Doesn't exist"], 404);
         }
 
-        if(!($projectId = CommonQueries::findProjectIdByTaskId($this->db, $taskId))){
-            $data = ['Unauthorized'];
-            return $response->withJson($data, 401);
-        }
-
-        if(!(CommonQueries::UserInProject($this->db, $userId, $projectId))){
-            $data = ['Unauthorized'];
-            return $response->withJson($data, 401);
-        }
+        $projectId = CommonQueries::findProjectIdByTaskId($this->db, $taskId);
 
         $userRole = CommonQueries::findUserRole($this->db, $projectId, $userId);
-        //UserRole wpisane "na sztywno"
-        if($userRole != "ADMIN") {
-            $data = ["Insufficient privileges" ];
 
-            return $response->withJson($data, 403);
+
+        if($userRole == ProjectUserRole::USER || $userRole == null) {
+            return $response->withJson(["uncategorized" => "Insufficient privileges"],403);
         }
 
-        $sql = "DELETE FROM UsersTasks WHERE taskId=:taskId;
-                DELETE FROM Tasks WHERE id=:taskId;";
 
-        $stmt=$this->db->prepare($sql);
-        $stmt->bindParam("taskId", $taskId);
-        $stmt->execute();
+        $sql = " DELETE FROM Tasks WHERE id=:taskId;";
 
-        return $response->withStatus(204);
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam("taskId", $taskId);
+            $stmt->execute();
+            return $response->withStatus(204);
+        }catch(\PDOException $e) {
+            return $response->withJson(['uncategorize' => $e->getMessage()], 400);
+        }
     }
 }

@@ -40,7 +40,7 @@ class CommonQueries
         $sql = "SELECT * FROM UsersProjects WHERE userId=:userId AND projectId=:projectId";
         $stmt = $db->prepare($sql);
         $stmt->bindParam("userId", $userId);
-        $stmt->bindParam("projectId", $projectId);        
+        $stmt->bindParam("projectId", $projectId);
         $stmt->execute();
         $data = $stmt->fetchObject();
 
@@ -81,16 +81,16 @@ class CommonQueries
         return $data;//? intval($data['userRole']) : null;
     }
 
-    public static  function UserInTask($db, string $userId, string $taskId): ?bool
-    {
-        $sql = "SELECT * FROM UsersTasks WHERE taskId=:taskId AND userId=:userId";
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("taskId", $taskId);
-        $stmt->bindParam("userId", $userId);
-        $stmt->execute();
-        $data = $stmt->fetchObject();
-
-        return $data? true : false;
-    }
+//    public static  function UserInTask($db, string $userId, string $taskId): ?bool
+//    {
+//        $sql = "SELECT * FROM UsersTasks WHERE taskId=:taskId AND userId=:userId";
+//        $stmt = $db->prepare($sql);
+//        $stmt->bindParam("taskId", $taskId);
+//        $stmt->bindParam("userId", $userId);
+//        $stmt->execute();
+//        $data = $stmt->fetchObject();
+//
+//        return $data? true : false;
+//    }
 
 }
