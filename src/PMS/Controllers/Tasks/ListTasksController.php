@@ -52,7 +52,7 @@ final class ListTasksController extends BaseController
 
         while ($row = $stmt->fetchObject()) {
             $task = new Task($row);
-            $task->assignedUser = $this->getUser($task->assignedUser);
+            $task->assignedUser = $this->getUser($task->assignedUserId);
             $tasks[] = $task;
         }
 
