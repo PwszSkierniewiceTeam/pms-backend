@@ -27,6 +27,8 @@ final class UpdateTaskController extends BaseController
         $userId = RequestingUserData::getUserId($request);
         $projectId = CommonQueries::findProjectIdByTaskId($this->db, $taskId);
 
+//        return $response->withJson($newTask['assignedUser']['id']);
+
 
         $currentTask = CommonQueries::findTaskById($this->db, $taskId);
         if (!($currentTask)) {
@@ -39,12 +41,12 @@ final class UpdateTaskController extends BaseController
             return $response->withJson($data, 401);
         }
 
-        if(!(CommonQueries::findUserById($this->db, $newTask['assignedUserId']))){
+        if(!(CommonQueries::findUserById($this->db, $newTask['assignedUser']['id']))){
             $data = ["Invalid parameters" => "The given user doesn't exist"];
             return $response->withJson($data, 401);
         }
 
-        if (!(CommonQueries::findUserRole($this->db, $projectId, $newTask['assignedUserId']))) {
+        if (!(CommonQueries::findUserRole($this->db, $projectId, $newTask['assignedUser']['id']))) {
             $data = ["Invalid parameters" => "The given user is not assigned to this project"];
             return $response->withJson($data);
         }
@@ -58,7 +60,7 @@ final class UpdateTaskController extends BaseController
 
         if ($this->validator->isValid()) {
             $sql = "UPDATE Tasks SET name=:name, description=:description, type=:type,
-                    status =:status, assignedUserId =:assignedUserId WHERE id=:currentId";
+                    status =:status, assignedUser =:assignedUser WHERE id=:currentId";
 
             try {
                 $stmt = $this->db->prepare($sql);
@@ -66,7 +68,7 @@ final class UpdateTaskController extends BaseController
                 $stmt->bindParam('description', $newTask['description']);
                 $stmt->bindParam('type', $newTask['type']);
                 $stmt->bindParam('status', $newTask['status']);
-                $stmt->bindParam('assignedUserId', $newTask['assignedUserId']);
+                $stmt->bindParam('assignedUser', $newTask['assignedUser']['id']);
                 $stmt->bindParam('currentId', $taskId);
                 $stmt->execute();
             } catch (\PDOException $e) {
