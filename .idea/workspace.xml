@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e96598d7-a853-4662-878d-ec9dc7ebd6dd" name="Default Changelist" comment="getTaskController">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database-schema/pms_all_tables_dev_only.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database-schema/pms_all_tables_dev_only.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PMS/Controllers/Tasks/GetTaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/PMS/Controllers/Tasks/GetTaskController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PMS/Controllers/Tasks/ListTasksController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/PMS/Controllers/Tasks/ListTasksController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PMS/Models/Task.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/PMS/Models/Task.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PMS/Controllers/Tasks/CreateTaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/PMS/Controllers/Tasks/CreateTaskController.php" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/awurth/slim-validation/" />
     <ignored path="$PROJECT_DIR$/vendor/composer/" />
@@ -130,13 +126,13 @@
     <session id="842618734">
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="php" value="20" />
+          <entry key="php" value="21" />
           <entry key="sql" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PHP" value="20" />
+          <entry key="PHP" value="21" />
           <entry key="SQL" value="2" />
         </counts>
       </usages-collector>
@@ -147,82 +143,25 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="php" value="964" />
+          <entry key="php" value="1012" />
           <entry key="sql" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="964" />
+          <entry key="PHP" value="1012" />
           <entry key="SQL" value="6" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PMS/Queries/CommonQueries.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1210">
-              <caret line="55" column="37" lean-forward="true" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
-              <folding>
-                <element signature="e#33#56#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database-schema/pms_all_tables_dev_only.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="726">
-              <caret line="42" column="29" lean-forward="true" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1423">
-              <caret line="128" column="14" lean-forward="true" selection-start-line="128" selection-start-column="14" selection-end-line="128" selection-end-column="14" />
-              <folding>
-                <element signature="e#7#54#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PMS/Controllers/Tasks/ListTasksController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
-              <folding>
-                <element signature="e#123#143#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PMS/Controllers/Tasks/GetTaskController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="47" selection-start-line="47" selection-end-line="56" selection-end-column="5" />
-              <folding>
-                <element signature="e#124#157#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/PMS/Models/Task.php">
+        <entry file="file://$PROJECT_DIR$/src/PMS/Controllers/Tasks/CreateTaskController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="27" column="35" lean-forward="true" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
+            <state relative-caret-position="220">
+              <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -250,7 +189,6 @@
         <option value="$PROJECT_DIR$/src/routes.php" />
         <option value="$PROJECT_DIR$/src/PMS/Controllers/User/AuthorizationController.php" />
         <option value="$PROJECT_DIR$/src/PMS/Controllers/User/RegisterController.php" />
-        <option value="$PROJECT_DIR$/src/PMS/Controllers/Tasks/CreateTaskController.php" />
         <option value="$PROJECT_DIR$/src/PMS/Controllers/Tasks/DeleteTaskController.php" />
         <option value="$PROJECT_DIR$/src/PMS/Queries/CommonQueries.php" />
         <option value="$PROJECT_DIR$/src/PMS/Controllers/Tasks/UpdateTaskController.php" />
@@ -258,6 +196,7 @@
         <option value="$PROJECT_DIR$/src/PMS/Controllers/Tasks/GetTaskController.php" />
         <option value="$PROJECT_DIR$/src/PMS/Controllers/Tasks/ListTasksController.php" />
         <option value="$PROJECT_DIR$/src/PMS/Models/Task.php" />
+        <option value="$PROJECT_DIR$/src/PMS/Controllers/Tasks/CreateTaskController.php" />
       </list>
     </option>
   </component>
@@ -324,7 +263,7 @@
     <option name="height" value="820" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
@@ -407,6 +346,37 @@
               <item name="pms-backend" type="b2602c69:ProjectViewProjectNode" />
               <item name="pms-backend" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="pms-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pms-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pms-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pms-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pms-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pms-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="PMS" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pms-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pms-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="PMS" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pms-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pms-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="PMS" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="Tasks" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -457,13 +427,22 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93430000" />
+    <option name="totallyTimeSpent" value="94036000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19215938" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -476,7 +455,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32884097" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.23450135" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.23315364" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -596,9 +575,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="14" column="52" lean-forward="true" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
-          <folding>
-            <element signature="e#40#75#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -625,9 +601,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="9" column="23" lean-forward="true" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
-          <folding>
-            <element signature="e#43#78#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -652,13 +625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PMS/Controllers/Tasks/CreateTaskController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/PMS/Enums/TaskStatus.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -677,9 +643,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1364">
           <caret line="67" column="7" lean-forward="true" selection-start-line="67" selection-start-column="7" selection-end-line="67" selection-end-column="7" />
-          <folding>
-            <element signature="e#124#159#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -690,9 +653,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1423">
           <caret line="128" column="14" lean-forward="true" selection-start-line="128" selection-start-column="14" selection-end-line="128" selection-end-column="14" />
-          <folding>
-            <element signature="e#7#54#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -717,9 +677,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
           <caret line="47" selection-start-line="47" selection-end-line="56" selection-end-column="5" />
-          <folding>
-            <element signature="e#124#157#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -727,9 +684,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
-          <folding>
-            <element signature="e#123#143#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -737,6 +691,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
           <caret line="27" column="35" lean-forward="true" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PMS/Controllers/Tasks/CreateTaskController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
         </state>
       </provider>
     </entry>

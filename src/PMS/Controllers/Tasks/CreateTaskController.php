@@ -25,12 +25,12 @@ final class CreateTaskController extends BaseController
             return $response->withJson(['Unauthorized'], 401);
         }
 
-        if (!(CommonQueries::findUserById($this->db, $task['assignedUserId']))) {
+        if (!(CommonQueries::findUserById($this->db, $task['assignedUser']['id']))) {
             $data = ["User doesn't exist"];
             return $response->withJson($data, 401);
         }
 
-        if (!(CommonQueries::findUserRole($this->db, $projectId, $task['assignedUserId']))) {
+        if (!(CommonQueries::findUserRole($this->db, $projectId, $task['assignedUser']['id']))) {
             $data = ['Unauthorized' => 'The given user is not assigned to this project'];
             return $response->withJson($data, 401);
         }
@@ -43,8 +43,8 @@ final class CreateTaskController extends BaseController
 
         if ($this->validator->isValid()) {
             $sql = "SET @uuid = uuid();";
-            $sql .= "INSERT INTO Tasks (id, name, projectId, description, type, status, assignedUserId)
-                             VALUES    (@uuid, :name, :projectId, :description, :type, :status, :assignedUserId);";
+            $sql .= "INSERT INTO Tasks (id, name, projectId, description, type, status, assignedUser)
+                             VALUES    (@uuid, :name, :projectId, :description, :type, :status, :assignedUser);";
 
             try {
                 $stmt = $this->db->prepare($sql);
@@ -53,7 +53,7 @@ final class CreateTaskController extends BaseController
                 $stmt->bindParam('name', $task['name']);
                 $stmt->bindParam('type', $task['type']);
                 $stmt->bindParam('status', $status = TaskStatus::TODO);
-                $stmt->bindParam('assignedUserId', $task['assignedUserId']);
+                $stmt->bindParam('assignedUser', $task['assignedUser']['id']);
                 $stmt->execute();
             } catch (\PDOException $e) {
                 return $response->withJson(['uncategorized' => $e->getMessage()], 400);
