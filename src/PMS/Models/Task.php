@@ -27,7 +27,4 @@ class Task extends BaseModel
     public $status;
     /* @var User $assignedUser */
     public $assignedUser;
-    /* @var string $assignedUserId */
-    public $assignedUserId;
-
 }
