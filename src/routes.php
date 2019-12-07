@@ -1,18 +1,18 @@
 <?php
 
+use PMS\Controllers\Project\AssignUserToProjectController;
+use PMS\Controllers\Project\GetAllProjectsController;
+use PMS\Controllers\Project\GetProjectController;
+use PMS\Controllers\Project\GetProjectUsersController;
+use PMS\Controllers\Project\PostNewProjectController;
+use PMS\Controllers\Project\RemoveProjectController;
+use PMS\Controllers\Project\RemoveUserFromProjectController;
+use PMS\Controllers\Project\UpdateProjectController;
 use PMS\Controllers\Tasks\CreateTaskController;
 use PMS\Controllers\Tasks\DeleteTaskController;
 use PMS\Controllers\Tasks\GetTaskController;
 use PMS\Controllers\Tasks\ListTasksController;
 use PMS\Controllers\Tasks\UpdateTaskController;
-use PMS\Controllers\Project\RemoveProjectController;
-use PMS\Controllers\Project\GetAllProjectsController;
-use PMS\Controllers\Project\GetProjectController;
-use PMS\Controllers\Project\PostNewProjectController;
-use PMS\Controllers\Project\UpdateProjectController;
-use PMS\Controllers\Project\GetProjectUsersController;
-use PMS\Controllers\Project\AssignUserToProjectController;
-use PMS\Controllers\Project\RemoveUserFromProjectController;
 use PMS\Controllers\User\AuthorizationController;
 use PMS\Controllers\User\RegisterController;
 use Slim\Http\Request;
@@ -21,7 +21,20 @@ use Slim\Http\Response;
 // Authenticate route.
 $app->post('/users/login', function (Request $request, Response $response) {
     $controller = new AuthorizationController($this->db);
-    return $controller->handleRequest($request, $response);
+    $res = $controller->handleRequest($request, $response);
+    $data = $request->getParsedBody();
+    $ipAddress = $request->getServerParam('REMOTE_ADDR');
+    if ($res->getStatusCode() !== 200) {
+        $this->logger->addInfo(
+            'Nieudana próba logowania na konto użytkownika: ' . $data['email'] . ' z adresu: ' . $ipAddress
+        );
+    } else {
+        $this->logger->addInfo(
+            'Poprawne logowanie użytkownika: ' . $data['email'] . ' z adresu: ' . $ipAddress
+        );
+    }
+
+    return $res;
 });
 
 /**

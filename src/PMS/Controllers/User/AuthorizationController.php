@@ -27,6 +27,7 @@ final class AuthorizationController extends BaseController
 
         // If user doesn't exists return error response
         if (!$user) {
+
             $data = [
                 "uncategorized" => "Password is invalid or user doesn't exist.",
             ];
