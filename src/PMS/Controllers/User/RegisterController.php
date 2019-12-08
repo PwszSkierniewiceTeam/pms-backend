@@ -30,7 +30,7 @@ final class RegisterController extends BaseController
                 $stmt->bindParam('name', $user->name);
                 $stmt->bindParam('surname', $user->surname);
                 $stmt->bindParam('email', $user->email);
-                $stmt->bindParam('password', $user->password);
+                $stmt->bindParam('password', hash('sha256', $user->password));
                 $stmt->execute();
             } catch (\PDOException $e) {
                 // Email already exists

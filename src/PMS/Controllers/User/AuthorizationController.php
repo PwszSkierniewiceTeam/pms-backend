@@ -23,7 +23,7 @@ final class AuthorizationController extends BaseController
         }
 
         // Find user in database
-        $user = $this->findUserByEmailAndPassword($data['email'], $data['password']);
+        $user = $this->findUserByEmailAndPassword($data['email'], hash('256', $data['password']));
 
         // If user doesn't exists return error response
         if (!$user) {
